@@ -11,11 +11,22 @@ const (
 )
 
 type aclManager struct {
-	users []string
-	endpoints []string
 	permissions map[string]map[string]map[string]bool
 }
 
+func (acl *aclManager) AddRule (user, endpoint, action string, allow bool) {
+	acl.permissions[endpoint] = map[string]map[string]bool{user:{action: allow,},}
+}
+
+func (acl *aclManager) DeleteRule (user, endpoint, action string) {
+	delete(acl.permissions[endpoint][user], action)
+}
+
+func (acl *aclManager) HasRight (user, endpoint, action string) bool {
+	return acl.permissions[endpoint][user][action]
+}
+
+
 var (
-	acl aclManager = aclManager{[]string{}, []string{}, make(map[string]map[string]map[string]bool)}
+	Acl aclManager = aclManager{make(map[string]map[string]map[string]bool)}
 )
