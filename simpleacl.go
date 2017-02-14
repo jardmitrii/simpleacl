@@ -29,6 +29,10 @@ func (acl *aclManager) DeleteRule (user, endpoint, action string) {
 	delete(acl.permissions[endpoint][user], action)
 }
 
+func (acl *aclManager) DeleteAllRules () {
+	acl.permissions = make(map[string]map[string]map[string]bool)
+}
+
 func (acl *aclManager) HasRight (user, endpoint, action string) bool {
 
 	endpointRules, endpoint_present := acl.permissions[endpoint]
