@@ -13,7 +13,12 @@ const (
 )
 
 type aclManager struct {
+	by_default bool
 	permissions map[string]map[string]map[string]bool
+}
+
+func (acl *aclManager) SetDefaultPolicy (by_default bool) {
+	acl.by_default = by_default
 }
 
 func (acl *aclManager) AddRule (user, endpoint, action string, allow bool) {
