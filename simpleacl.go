@@ -50,7 +50,7 @@ func (acl *aclManager) HasRight (user, endpoint, action string) bool {
 	}
 
 	actionRule, action_present := userRules[action]
-	if !action_present && user != ANY {
+	if !action_present && action != ANY {
 		actionRule, action_present = userRules[ANY]
 	}
 
