@@ -63,5 +63,5 @@ func (acl *aclManager) HasRight (user, endpoint, action string) bool {
 
 
 var (
-	Acl aclManager = aclManager{make(map[string]map[string]map[string]bool)}
+	Acl *aclManager = &aclManager{false, make(map[string]map[string]map[string]bool)}
 )

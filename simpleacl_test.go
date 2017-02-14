@@ -30,7 +30,7 @@ func TestHasRight (t *testing.T) {
 		{"user5", "endpoint5", "",},
 	}
 
-	acl := &simpleacl.Acl
+	acl := simpleacl.Acl
 	for _, allow := range []bool{simpleacl.ALLOW, simpleacl.DENY} {
 		for _, v := range test_rules {
 			acl.AddRule(v[0], v[1], v[2], allow)
