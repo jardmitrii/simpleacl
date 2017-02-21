@@ -1,14 +1,14 @@
 package simpleacl_test
 
 import (
-	"github.com/jardmitrii/simpleacl"
-
 	"testing"
+
+	"github.com/jardmitrii/simpleacl"
 )
 
 type rule struct {
 	user, endpoint, action string
-	allow bool
+	allow                  bool
 }
 
 type testCase struct {
@@ -93,12 +93,11 @@ var (
 			{"user2", simpleacl.ANY, simpleacl.DELETE, simpleacl.DENY},
 
 			{"user2", "endpoint1", simpleacl.ANY, simpleacl.DENY},
-
 		},
 	}
 )
 
-func TestHasRight (t *testing.T) {
+func TestHasRight(t *testing.T) {
 	testCases := []testCase{allAllowedCase, allDeniedOneAllowedCase}
 
 	acl := simpleacl.Acl

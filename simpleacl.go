@@ -4,36 +4,36 @@ const (
 	ANY = ""
 
 	CREATE = "create"
-	READ = "read"
+	READ   = "read"
 	UPDATE = "update"
 	DELETE = "delete"
 
 	ALLOW = true
-	DENY = false
+	DENY  = false
 )
 
 type aclManager struct {
-	by_default bool
+	by_default  bool
 	permissions map[string]map[string]map[string]bool
 }
 
-func (acl *aclManager) SetDefaultPolicy (by_default bool) {
+func (acl *aclManager) SetDefaultPolicy(by_default bool) {
 	acl.by_default = by_default
 }
 
-func (acl *aclManager) AddRule (user, endpoint, action string, allow bool) {
-	acl.permissions[endpoint] = map[string]map[string]bool{user:{action: allow,},}
+func (acl *aclManager) AddRule(user, endpoint, action string, allow bool) {
+	acl.permissions[endpoint] = map[string]map[string]bool{user: {action: allow}}
 }
 
-func (acl *aclManager) DeleteRule (user, endpoint, action string) {
+func (acl *aclManager) DeleteRule(user, endpoint, action string) {
 	delete(acl.permissions[endpoint][user], action)
 }
 
-func (acl *aclManager) DeleteAllRules () {
+func (acl *aclManager) DeleteAllRules() {
 	acl.permissions = make(map[string]map[string]map[string]bool)
 }
 
-func (acl *aclManager) HasRight (user, endpoint, action string) bool {
+func (acl *aclManager) HasRight(user, endpoint, action string) bool {
 
 	endpointRules, endpoint_present := acl.permissions[endpoint]
 	if !endpoint_present && endpoint != ANY {
@@ -64,7 +64,6 @@ func (acl *aclManager) HasRight (user, endpoint, action string) bool {
 
 	return actionRule
 }
-
 
 var (
 	Acl *aclManager = &aclManager{false, make(map[string]map[string]map[string]bool)}
