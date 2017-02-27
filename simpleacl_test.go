@@ -95,10 +95,26 @@ var (
 			{"user2", "endpoint1", simpleacl.ANY, simpleacl.DENY},
 		},
 	}
+	twoAllowedToCreate testCase = testCase{
+		rules: []rule{
+			{simpleacl.ANY, simpleacl.ANY, simpleacl.ANY, simpleacl.DENY},
+			{"user1", "endpoint1", simpleacl.CREATE, simpleacl.ALLOW},
+			{"user2", "endpoint1", simpleacl.CREATE, simpleacl.ALLOW},
+		},
+		check: []rule{
+			{"user1", "endpoint1", simpleacl.CREATE, simpleacl.ALLOW},
+			{"user2", "endpoint1", simpleacl.CREATE, simpleacl.ALLOW},
+			{"user3", "endpoint1", simpleacl.CREATE, simpleacl.DENY},
+			{"user1", "endpoint2", simpleacl.CREATE, simpleacl.DENY},
+			{"user2", "endpoint2", simpleacl.CREATE, simpleacl.DENY},
+			{"user1", "endpoint1", simpleacl.DELETE, simpleacl.DENY},
+			{"user2", "endpoint1", simpleacl.DELETE, simpleacl.DENY},
+		},
+	}
 )
 
 func TestHasRight(t *testing.T) {
-	testCases := []testCase{allAllowedCase, allDeniedOneAllowedCase}
+	testCases := []testCase{allAllowedCase, allDeniedOneAllowedCase, twoAllowedToCreate}
 
 	acl := simpleacl.Acl
 	for _, testCase := range testCases {
